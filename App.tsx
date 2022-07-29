@@ -1,10 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ListRenderItem } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ListRenderItem, Dimensions } from 'react-native';
 
 type imgArrayType = string[]
 
+const { width, height } = Dimensions.get('screen')
+
+const WIDTH = width
+const HEIGHT = height
+
 const imgArray: imgArrayType = ['https://overcoder.net/img/1/2/99/19825.png',
+  'https://overcoder.net/img/1/2/99/19825.png',
   'http://pngimg.com/uploads/hedgehog/hedgehog_PNG20.png',
   'http://pngimg.com/uploads/hedgehog/hedgehog_PNG20.png',
   'http://pngimg.com/uploads/hedgehog/hedgehog_PNG20.png',
@@ -32,15 +38,18 @@ const imgArray: imgArrayType = ['https://overcoder.net/img/1/2/99/19825.png',
 ]
 
 
+
 export default function App() {
 
-  const renderItem: ListRenderItem<string> = useCallback(({item}) => (
-    <Image source = {{uri: item}}/>
-    
-  ), [])
-console.log();
+  const renderItem: ListRenderItem<string> = useCallback(({ item }) => (
+    <View style={styles.pictures}>
+    <Image style={styles.img}  source={{ uri: item }} />
+    </View>
 
-  const keyExtractor = useCallback(( index) => index + 1, [])
+  ), [])
+  console.log();
+
+  const keyExtractor = useCallback((index) => index + 1, [])
 
 
 
@@ -48,24 +57,26 @@ console.log();
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Image style={styles.avatar} source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Avatar_poe84it.png'}}/>
+        <Image style={styles.avatar} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Avatar_poe84it.png' }} />
         <View style={styles.publication}>
           <Text style={styles.textN}>54</Text>
           <Text style={styles.textN}>100</Text>
           <Text style={styles.textN}>150</Text>
         </View>
       </View>
-      <View  style={styles.folowers}>
+      <View style={styles.folowers}>
         <Text style={styles.text}>Publication</Text>
         <Text style={styles.text}>Followers</Text>
         <Text style={styles.text}>Subscriptions</Text>
       </View>
       <View>
         <FlatList
-        data={imgArray}
-        numColumns={3}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
+          data={imgArray}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          contentContainerStyle={{ paddingHorizontal: 15 }}
+          numColumns={3}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
         />
       </View>
       <StatusBar style="auto" />
@@ -76,7 +87,7 @@ console.log();
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:'column',
+    flexDirection: 'column',
     backgroundColor: 'black',
   },
   avatar: {
@@ -84,35 +95,44 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
   },
-  box:{
+  box: {
     marginTop: 50,
     marginLeft: 10,
-    flexDirection:'row',
-    alignItems:'center',
-    
+    flexDirection: 'row',
+    alignItems: 'center',
+
   },
-  publication:{
+  publication: {
     justifyContent: 'space-between',
-    flexDirection:'row',
+    flexDirection: 'row',
     marginLeft: 50,
-    
+
   },
-  folowers:{
+  folowers: {
     justifyContent: 'space-between',
-    flexDirection:'row',
+    flexDirection: 'row',
     marginLeft: 70,
     marginRight: 20,
-    
+
   },
   textN: {
     marginRight: 30,
     fontSize: 25,
     color: 'white',
-    
+
   },
   text: {
     fontSize: 15,
-    color: 'white', 
+    color: 'white',
+  },
+  pictures: {
+    marginTop: 30,
+    marginRight: 5,
+    marginLeft: 5,
+  },
+  img: {
+    width: 110,
+    height: 110,
   }
 
 });
